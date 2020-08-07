@@ -7,6 +7,7 @@
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython_stdlib.js"></script>
 
     <style>
         *{
@@ -27,7 +28,13 @@
             padding: 10px 30px 10px 30px;
             text-align: right;
         }
-        #probability{
+        #probability {
+            color: crimson;
+            border-width: 0px;
+            text-align: right;
+        }
+
+        #probability_ascii {
             color: crimson;
             border-width: 0px;
             text-align: right;
@@ -52,12 +59,23 @@ def calculate(event):
             document['probability'].textContent = "Phred score should be positive!"
         else:
             result = 10 ** ((-phred) / 10)
-            document['probability'].textContent = '%.9f' %result
+            document['probability'].textContent = '%.9f (Base 33 corresponding ASCII: %s)' %(result, chr(phred + 33))
             # document['probability'].textContent = str(result)
     except ValueError:
         document['probability'].textContent = "Incorrect entry! Try again!"
 
+def calculate_ascii(event):
+    ascii_char = document['ascii'].value
+    if len(ascii_char) != 1:
+        document['probability_ascii'].textContent = "Enter a character of length 1!"
+    else:
+        phred = ord(ascii_char) - 33
+        result = 10 ** ((-phred) / 10)
+        document['probability_ascii'].textContent = '%.9f (Phred score: %s)' %(result, phred)
+
+
 document['calculate_button'].bind("click", calculate)
+document['calculate_button_ascii'].bind("click", calculate_ascii)
 
 </script>
 
@@ -68,11 +86,18 @@ Calculate the probability of a call/mapping being incorrect from Phred score
 <br><br>
 <input id="phred" value="0">
 <button id="calculate_button">Calculate probability!</button>
-<br>
-<br>
+<br><br>
 <label id="label1">Probability of call/mapping being incorrect:</label>
 <label id="probability"></label>
+<hr>
 
+Convert Phred score encoded by Ascii base 33 characters to the probability of a call/mapping being incorrect
+<br><br>
+<input id="ascii" value="A">
+<button id="calculate_button_ascii">Calculate probability!</button>
+<br><br>
+<label id="label1_ascii">Probability of call/mapping being incorrect:</label>
+<label id="probability_ascii"></label>
 </body>
 
 </html>
