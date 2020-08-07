@@ -39,6 +39,30 @@
             border-width: 0px;
             text-align: right;
         }
+
+        /* button source: https://github.com/michenriksen/css3buttons */
+        #btn {
+
+            display: inline-block;
+            padding: 5px;
+            font-family: 'lucida grande',
+            tahoma, verdana, arial, sans-serif; font-size: 12px; color: #3C3C3D;
+            text-shadow: 1px 1px 0 #FFFFFF;
+            background: #ECECEC url('../images/css3buttons_backgrounds.png') 0 0 no-repeat;
+            white-space: nowrap;
+            overflow: visible;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid #CACACA; -webkit-border-radius: 2px;-moz-border-radius: 2px;
+            border-radius: 2px;
+            outline: none;
+            position: relative;
+            zoom: 1;
+            line-height: 1.11;
+            display: inline;
+            vertical-align: middle;
+        }
+
         </style>
 
 
@@ -59,7 +83,7 @@ def calculate(event):
             document['probability'].textContent = "Phred score should be positive!"
         else:
             result = 10 ** ((-phred) / 10)
-            document['probability'].textContent = '%.9f (Base 33 corresponding ASCII: %s)' %(result, chr(phred + 33))
+            document['probability'].textContent = '%.9f (Base 33 corresponding ASCII:  %s  )' %(result, chr(phred + 33))
             # document['probability'].textContent = str(result)
     except ValueError:
         document['probability'].textContent = "Incorrect entry! Try again!"
@@ -71,8 +95,7 @@ def calculate_ascii(event):
     else:
         phred = ord(ascii_char) - 33
         result = 10 ** ((-phred) / 10)
-        document['probability_ascii'].textContent = '%.9f (Phred score: %s)' %(result, phred)
-
+        document['probability_ascii'].textContent = '%.9f (Phred score:  %s  )' %(result, phred)
 
 document['calculate_button'].bind("click", calculate)
 document['calculate_button_ascii'].bind("click", calculate_ascii)
@@ -91,7 +114,7 @@ Calculate the probability of a call/mapping being incorrect from Phred score
 <label id="probability"></label>
 <hr>
 
-Convert Phred score encoded by Ascii base 33 characters to the probability of a call/mapping being incorrect
+Convert Phred score encoded by ASCII base 33 characters to the probability of a call/mapping being incorrect
 <br><br>
 <input id="ascii" value="A">
 <button id="calculate_button_ascii">Calculate probability!</button>
@@ -101,6 +124,7 @@ Convert Phred score encoded by Ascii base 33 characters to the probability of a 
 <hr>
 <h2>License</h2>
 <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="Creative Commons License"></a>
-
+<br>
+<a href="https://github.com/eafyounian/phred_score_converter" id="btn">View source on GitHub</a>
 </body>
 </html>
