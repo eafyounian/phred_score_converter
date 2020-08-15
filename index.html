@@ -4,103 +4,15 @@
 <head>
     <meta charset="utf-8">
     <title>Phred score converter</title>
+    <link rel="stylesheet" href="styles.css">
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython_stdlib.js"></script>
-
-    <style>
-        *{
-            font-family: sans-serif;
-            font-size: 1.2em;
-        }
-        td{
-            background-color: #ccc;
-            padding: 10px 30px 10px 30px;
-            border-radius: 0.2em;
-            text-align: center;
-            cursor: default;
-        }
-        #result{
-            border-color: #000;
-            border-width: 1px;
-            border-style: solid;
-            padding: 10px 30px 10px 30px;
-            text-align: right;
-        }
-        #probability {
-            color: crimson;
-            border-width: 0px;
-            text-align: right;
-        }
-
-        #probability_ascii {
-            color: crimson;
-            border-width: 0px;
-            text-align: right;
-        }
-
-        /* button source: https://github.com/michenriksen/css3buttons */
-        #btn {
-
-            display: inline-block;
-            padding: 5px;
-            font-family: 'lucida grande',
-            tahoma, verdana, arial, sans-serif; font-size: 12px; color: #3C3C3D;
-            text-shadow: 1px 1px 0 #FFFFFF;
-            background: #ECECEC url('../images/css3buttons_backgrounds.png') 0 0 no-repeat;
-            white-space: nowrap;
-            overflow: visible;
-            cursor: pointer;
-            text-decoration: none;
-            border: 1px solid #CACACA; -webkit-border-radius: 2px;-moz-border-radius: 2px;
-            border-radius: 2px;
-            outline: none;
-            position: relative;
-            zoom: 1;
-            line-height: 1.11;
-            display: inline;
-            vertical-align: middle;
-        }
-
-        </style>
-
-
+    <script type="text/python" src="phred_score_converter.py"></script>
 </head>
 
 <body onload="brython()">
-
-
-<script type="text/python">
-from browser import document, html
-
-def calculate(event):
-    phred = document['phred'].value
-    try:
-        phred = int(phred)
-
-        if phred < 0:
-            document['probability'].textContent = "Phred score should be positive!"
-        else:
-            result = 10 ** ((-phred) / 10)
-            document['probability'].textContent = '%.9f (Base 33 corresponding ASCII:  %s  )' %(result, chr(phred + 33))
-            # document['probability'].textContent = str(result)
-    except ValueError:
-        document['probability'].textContent = "Incorrect entry! Try again!"
-
-def calculate_ascii(event):
-    ascii_char = document['ascii'].value
-    if len(ascii_char) != 1:
-        document['probability_ascii'].textContent = "Enter a character of length 1!"
-    else:
-        phred = ord(ascii_char) - 33
-        result = 10 ** ((-phred) / 10)
-        document['probability_ascii'].textContent = '%.9f (Phred score:  %s  )' %(result, phred)
-
-document['calculate_button'].bind("click", calculate)
-document['calculate_button_ascii'].bind("click", calculate_ascii)
-
-</script>
 
 <h1>Phred score to probability converter</h1>
 
